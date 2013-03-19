@@ -1,7 +1,7 @@
-circleNode.d: ../circleNode.cpp ../circleNode.h ../data.h ../node.h
+circleNode.d: ../circleNode.cpp ../circleNode.h ../node.h ../data.h
 
 ../circleNode.h:
 
-../data.h:
-
 ../node.h:
+
+../data.h:

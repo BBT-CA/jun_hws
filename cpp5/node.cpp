@@ -29,6 +29,10 @@ void Node::remove()
 	}
 }
 
+void Node::remove(Node* node)
+{
+	this->next_ = node;
+}
 /* get value */
 int Node::get()
 {

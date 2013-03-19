@@ -18,13 +18,16 @@ public:
 	Node();
 	virtual void addAfter(Node& node,int value);
 	virtual void remove();
-	Node* next();
+	virtual void remove(Node* node);
+	virtual Node* next();
 	int get();
 	virtual ~Node() {};
 
+protected:
+	Data data_;
+
 private:
 	Node* next_;
-	Data data_;
 };
 
 

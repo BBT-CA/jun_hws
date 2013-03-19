@@ -10,46 +10,48 @@
 #include <cstring>
 #include "circleNode.h"
 #include "data.h"
+#include "circleNode.h"
 
 using namespace std;
 /* constructor. set the node automatically point to itself */
 CircleNode::CircleNode()
 {
-	this->prev_ = this;
-	this->next_ = this;
+	this->cPrev_ = this;
+	this->cNext_ = this;
 }
 
 /* add new node after current */
 void CircleNode::addAfter(CircleNode& node,int value)
 {
 	node.data_.set(value);
-	this->next_->prev_ = &node;
-	node.next_ = this->next_;
-	node.prev_ = this;
-	this->next_ = &node;
-
-	cout << this->data_.get() <<" " << next_->data_.get() << " " << next_->next_->data_.get() <<endl;
+	this->cNext_->cPrev_ = &node;
+	node.cNext_ = this->cNext_;
+	node.cPrev_ = this;
+	this->cNext_ = &node;
 }
 
 /* add new node before current */
 void CircleNode::addBefore(CircleNode& node,int value)
 {
 	node.data_.set(value);
-	this->prev_->next_ = &node;
-	node.next_ = this;
-	node.prev_ = this->prev_;
-	this->prev_ = &node;
+	this->cPrev_->cNext_ = &node;
+	node.cNext_ = this;
+	node.cPrev_ = this->cPrev_;
+	this->cPrev_ = &node;
 }
 
 /* remove current node from list */
 void CircleNode::remove()
-{cout << "circle node remove" << endl;
-cout <<  prev_->get() <<" " << this->get() << " " << next_->get() <<endl;
-	prev_->next_ = next_;
-	next_->prev_ = prev_;
+{
+	cPrev_->cNext_ = cNext_;
+	cNext_->cPrev_ = cPrev_;
 }
 
-
+/* get next node */
+CircleNode* CircleNode::next()
+{
+	return cNext_;
+}
 
 
 

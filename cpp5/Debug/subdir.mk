@@ -11,7 +11,7 @@ CPP_SRCS += \
 ../main.cpp \
 ../node.cpp \
 ../singleLinkedList.cpp \
-../sortList.cpp 
+../sortDoubleLinkedList.cpp 
 
 OBJS += \
 ./circleNode.o \
@@ -21,7 +21,7 @@ OBJS += \
 ./main.o \
 ./node.o \
 ./singleLinkedList.o \
-./sortList.o 
+./sortDoubleLinkedList.o 
 
 CPP_DEPS += \
 ./circleNode.d \
@@ -31,7 +31,7 @@ CPP_DEPS += \
 ./main.d \
 ./node.d \
 ./singleLinkedList.d \
-./sortList.d 
+./sortDoubleLinkedList.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

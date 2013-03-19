@@ -15,7 +15,7 @@ class DoubleLinkedList : public List
 {
 public:
 	virtual ~DoubleLinkedList();
-	void add(int &value);
+	virtual void add(int &value);
 	void remove(int &value);
 	Iterator* createIterator();
 	void print();

@@ -13,14 +13,15 @@
 class SingleLinkedList : public List
 {
 public:
-	virtual ~SingleLinkedList();
+	~SingleLinkedList();
 	void add(int &value);
 	void remove(int &value);
+	Iterator* createIterator();
+	void print();
 
 private:
 	Node head_;
-
-
+	void remove(Iterator* it);
 };
 
 #endif /* SINGLELINKEDLIST_H_ */

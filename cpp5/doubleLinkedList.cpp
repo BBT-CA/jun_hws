@@ -10,16 +10,17 @@
 #include <stdlib.h>
 #include <iostream>
 #include <cstring>
-#include <typeinfo>
+
 using namespace std;
 /* DobleLinkedList destructor */
 DoubleLinkedList::~DoubleLinkedList()
 {
-	CircleNode* node = &head_;
+	CircleNode* node = head_.next();
 	while (node->next() != &head_)
 	{
 		CircleNode* tmp = node;
 		node->remove();
+		node = tmp->next();
 		delete tmp;
 	}
 }
@@ -30,14 +31,21 @@ void DoubleLinkedList::add(int &value)
 	Iterator *it = createIterator();
 	CircleNode *nNode = new CircleNode();
 	dynamic_cast<CircleNode*>(it->current())->addAfter(*nNode,value);
+	delete it;
 }
 
 /* remove data from list */
 void DoubleLinkedList::remove(int &value)
 {
 	Iterator* it = createIterator();
-	if(locate(*it,value).hasNext())
-		it->current()->remove();
+	if (locate(*it,value).current()->get() == value) {
+		if(locate(*it,value).current() != &head_) {
+			it->current()->remove();
+			delete it->current();
+		}
+	} else {
+		cout << "Sorry, there is no integer " << value << " in the list" << endl;
+	}
 	delete it;
 }
 
@@ -49,12 +57,13 @@ Iterator* DoubleLinkedList::createIterator()
 
 void DoubleLinkedList::print()
 {
-	Iterator* it = new ListIterator(&head_);
-	cout << "type of it:" << typeid(it).name();
+	Iterator* it = createIterator();
 	while(it->hasNext())
-	{cout << "hello" << endl;
+	{
 		cout <<it->next() << " " ;
 	}
-	cout << "double print" << endl;
+	cout << endl;
 	delete it;
 }
+
+

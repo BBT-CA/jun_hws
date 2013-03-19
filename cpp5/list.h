@@ -30,6 +30,7 @@ protected:
 	private:
 			Node* current_;
 			Node* iHead_;
+
 	};
 
 public:
@@ -37,14 +38,14 @@ public:
 	virtual ~List() {};
 	virtual void add(int &value) = 0;
 	virtual void remove(int &value) = 0;
-	virtual Iterator* createIterator();
-	virtual void print();
+	virtual Iterator* createIterator() = 0;
+//	virtual void print();
 
 protected:
 	virtual Iterator& locate(Iterator& it, int value);
 
 private:
-	Node head_;
+//	Node head_;
 };
 
 #endif /* LIST_H_ */

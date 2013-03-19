@@ -8,10 +8,10 @@
 #ifndef CIRCLENODE_H_
 #define CIRCLENODE_H_
 
-#include "data.h"
+//#include "data.h"
 #include "node.h"
 
-class Data;
+//class Data;
 
 class CircleNode : public Node
 {
@@ -20,11 +20,12 @@ public:
 	void addAfter(CircleNode& node,int value);
 	void addBefore(CircleNode& node,int value);
 	void remove();
+	CircleNode* next();
+	~CircleNode() {};
 
 private:
-	CircleNode* prev_;
-	CircleNode* next_;
-	Data data_;
+	CircleNode* cPrev_;
+	CircleNode* cNext_;
 };
 
 
