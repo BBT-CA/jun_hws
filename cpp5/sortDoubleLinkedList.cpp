@@ -22,7 +22,7 @@ void SortDoubleLinkedList::add(int &value)
 }
 
 /* get iterator by value*/
-Iterator& SortDoubleLinkedList::find(Iterator &it,int value)
+Iterator& SortDoubleLinkedList::locAddPosition(Iterator &it,int value)
 {
 	while(it.hasNext())
 		if (it.next() > value) break;
