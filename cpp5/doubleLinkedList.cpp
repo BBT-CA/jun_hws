@@ -38,11 +38,10 @@ void DoubleLinkedList::add(int &value)
 void DoubleLinkedList::remove(int &value)
 {
 	Iterator* it = createIterator();
-	if (locate(*it,value).current()->get() == value) {
-		if(locate(*it,value).current() != &head_) {
+	locate(*it,value);
+	if ((it->current()->get() == value) && (it->current() != &head_)) {
 			it->current()->remove();
 			delete it->current();
-		}
 	} else {
 		cout << "Sorry, there is no integer " << value << " in the list" << endl;
 	}

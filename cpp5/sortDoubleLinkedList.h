@@ -14,8 +14,10 @@ class SortDoubleLinkedList : public DoubleLinkedList
 {
 public:
 	void add(int &value);
+	void remove(int &value);
 private:
-	virtual Iterator& locAddPosition(Iterator& it, int value);
+	CircleNode head_;
+	virtual Iterator& locate(Iterator& it, int value);
 
 };
 
