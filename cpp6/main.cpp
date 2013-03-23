@@ -13,11 +13,22 @@
 #include <time.h>
 #include "list.h"
 #include "iterator.h"
+#include "loc.h"
 #include "singleLinkedList.h"
 #include "doubleLinkedList.h"
 #include "sortDoubleLinkedList.h"
+#include "locSortDouble.h"
 
 using namespace std;
+
+void print(Iterator<int>* it) {
+	while(it->hasNext())
+	{
+		cout << it->next() << " " ;
+	}
+	cout << endl;
+	delete it;
+}
 
 int main()
 {
@@ -27,76 +38,113 @@ int main()
 
 	/* create a single-linked list with 21 random integer */
 
-	SingleLinkedList list;
+	Loc<int>* loc = new Loc<int>();
+	SingleLinkedList<int> list(loc);
+	cout << "Add the following integers to list:" << endl;
 	for(int i=1;i<=num;i++)
 	{
 		int value = rand()%100;
 		list.add(value);
+		cout << value << " ";
 	}
+	cout << endl;
+	delete loc;
 
 	/* print list */
-	cout << "creating single-linked list:" << endl;
-	list.print();
+	cout << "Create single-linked list:" << endl;
+	print(list.createIterator());
 
 	/* remove node from list */
 	int val;
-	cout << "Please enter the integer you want to delete: ";
+	cout << "Enter the integer you want to delete: ";
 	cin >> val;
-	list.remove(val);
+	Iterator<int>* it = list.createIterator();
+	while(it->hasNext()) {
+		if (it->next() == val) break;
+	}
+	if (it->current()->get() == val) {
+		list.remove(it);
+	}
+	delete it;
 
 	/* print list after deleting node */
-	cout << "after deleting integer " << val << "..." << endl;
-	list.print();
+	cout << "Delete integer " << val << "..." << endl;
+	print(list.createIterator());
 	cout << "===========================================" << endl << endl;
 
 	/* ===================================================*/
 	/* create a double-linked list with 21 random integer */
 
-	DoubleLinkedList dList;
+	Loc<int>* dLoc = new Loc<int>();
+	DoubleLinkedList<int> dList(dLoc);
+	cout << "Add the following integers to list:" << endl;
 	for(int j=1;j<=num;j++)
 	{
 		int dValue = rand()%100;
 		dList.add(dValue);
+		cout << dValue << " ";
 	}
+	cout << endl;
+
+	delete dLoc;
 
 	/* print list */
-	cout << "creating double-linked list:" << endl;
-	dList.print();
+	cout << "Create double-linked list:" << endl;
+	print(dList.createIterator());
 
 	/* remove node from list */
 	int dVal;
-	cout << "Please enter the integer you want to delete: ";
+	cout << "Enter the integer you want to delete: ";
 	cin >> dVal;
-	dList.remove(dVal);
+	Iterator<int>* itD = dList.createIterator();
+	while(itD->hasNext()) {
+		if (itD->next() == dVal) {
+			dList.remove(itD);
+			break;
+		}
+	}
+	delete itD;
 
 	/* print list after deleting node */
-	cout << "after deleting integer " << dVal << "..." << endl;
-	dList.print();
+	cout << "Delete integer " << dVal << "..." << endl;
+	print(dList.createIterator());
 	cout << "===========================================" << endl << endl;
 
 	/* ===================================================*/
 	/* create a sorted double-linked list with 21 random integer */
 
-	SortDoubleLinkedList sList;
+	LocSortDouble<int>* sLoc = new LocSortDouble<int>();
+	SortDoubleLinkedList<int> sList(sLoc);
+	cout << "Add the following integers to list in ascending order:" << endl;
 	for(int i=1;i<=num;i++)
 	{
 		int sValue = rand()%100;
 		sList.add(sValue);
+		cout << sValue << " ";
 	}
+	cout << endl;
+	delete sLoc;
 
 	/* print list */
-	cout << "creating a sorted double-linked list:" << endl;
-	sList.print();
+	cout << "Create a sorted double-linked list:" << endl;
+	print(sList.createIterator());
 
 	/* remove node from list */
 	int sVal;
-	cout << "Please enter the integer you want to delete: ";
+	cout << "Enter the integer you want to delete: ";
 	cin >> sVal;
-	sList.remove(sVal);
+	Iterator<int>* itS = sList.createIterator();
+	while(itS->hasNext()) {
+		if (itS->next() == sVal) {
+			sList.remove(itS);
+			break;
+		}
+	}
+	delete itS;
 
 	/* print list after deleting node */
-	cout << "after deleting integer " << sVal << "..." << endl;
-	sList.print();
+	cout << "Delete integer " << sVal << "..." << endl;
+	print(sList.createIterator());
 	cout << "===========================================" << endl;
 
 	return 0;

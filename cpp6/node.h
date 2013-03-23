@@ -17,9 +17,10 @@ class Node
 {
 public:
 	Node();
-	virtual void addAfter(Node& node,T value);
+	Node(T value);
+	virtual void addAfter(Node& node);
 	virtual void remove();
-	virtual void remove(Node* node);
+	virtual void setNext(Node* node);
 	virtual Node* next();
 	T get();
 	virtual ~Node() {};
@@ -38,9 +39,15 @@ Node<T>::Node()
 }
 
 template <typename T>
-void Node<T>::addAfter(Node& node,T value)
+Node<T>::Node(T value)
 {
-	node.data_.set(value);
+	this->next_ = this;
+	this->data_.set(value);
+}
+
+template <typename T>
+void Node<T>::addAfter(Node& node)
+{
 	node.next_ = this->next_;
 	this->next_ = &node;
 }
@@ -55,11 +62,13 @@ void Node<T>::remove()
 	}
 }
 
+/* set next node of current. This method is for deleting last node in single-linked list */
 template <typename T>
-void Node<T>::remove(Node* node)
+void Node<T>::setNext(Node* node)
 {
 	this->next_ = node;
 }
+
 /* get value */
 template <typename T>
 T Node<T>::get()

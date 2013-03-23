@@ -9,30 +9,40 @@
 #define SINGLELINKEDLIST_H_
 
 #include "list.h"
+#include "listIterator.h"
+#include "loc.h"
 
 template <typename T>
 class SingleLinkedList : public List<T>
 {
 public:
+	SingleLinkedList(Loc<T>* loc);
 	~SingleLinkedList();
 	void add(T &value);
-	void remove(T &value);
+	void remove(Iterator<T>* it);
 	Iterator<T>* createIterator();
-	void print();
+	Iterator<T>* locate(Iterator<T>* it,T value);
 
 private:
 	Node<T> head_;
-	void remove(Iterator<T>* it);
+	Loc<T>* locList_;
 };
+
+/* SingleLinkedList constructor */
+template <typename T>
+SingleLinkedList<T>::SingleLinkedList(Loc<T>* loc)
+{
+	locList_ = loc;
+}
 
 /* SingleLinkedList destructor */
 template <typename T>
-SingleLinkedList::~SingleLinkedList()
+SingleLinkedList<T>::~SingleLinkedList()
 {
-	Node* node = head_.next();
+	Node<T>* node = head_.next();
 	while (node->next() != &head_)
 	{
-		Node* tmp = node;
+		Node<T>* tmp = node;
 		node = node->next();
 		delete tmp;
 	}
@@ -42,61 +52,45 @@ SingleLinkedList::~SingleLinkedList()
 template <typename T>
 void SingleLinkedList<T>::add(T &value)
 {
-	Iterator *it = createIterator();
-	Node *nNode = new Node();
-	it->current()->addAfter(*nNode,value);
+	Iterator<T> *it = createIterator();
+	Node<T> *nNode = new Node<T>(value);
+	it = locate(it,value);
+	it->current()->addAfter(*nNode);
 	delete it;
 }
 
+/*remove data from list */
 template <typename T>
-void SingleLinkedList<T>::remove(T &value)
+void SingleLinkedList<T>::remove(Iterator<T>* it)
 {
-	Iterator* it = createIterator();
-	if (locate(*it,value).current()->get() == value) {
 		if(it->hasNext()) {
-			Node* tmp = it->current()->next();
+			Node<T>* tmp = it->current()->next();
 			it->current()->remove();
 			delete tmp;
 		} else {
-			remove(it);
+			Iterator<T>* itL = createIterator();
+			while(itL->current()->next() != it->current()) {
+				itL->next();
+			}
+			itL->current()->setNext(&head_);
+			delete it->current();
+			delete itL;
 		}
-	} else {
-		cout << "Sorry, there is no integer " << value << " in the list" << endl;
-	}
-	delete it;
-}
 
-template <typename T>
-void SingleLinkedList<T>::remove(Iterator* it)
-{
-	Iterator* itL = createIterator();
-	while(itL->current()->next() != it->current()) {
-		itL->next();
-	}
-	itL->current()->remove(&head_);
-	delete it->current();
-	delete itL;
 }
 
 /* create iterator */
 template <typename T>
-Iterator* SingleLinkedList::createIterator()
+Iterator<T>* SingleLinkedList<T>::createIterator()
 {
-	return new ListIterator(&head_);
+	return new ListIterator<T>(&head_);
 }
 
+/* get iterator for adding new node to the list */
 template <typename T>
-void SingleLinkedList<T>::print()
+Iterator<T>* SingleLinkedList<T>::locate(Iterator<T>* it,T value)
 {
-	Iterator<T>* it = createIterator();
-	while(it->hasNext())
-	{
-		cout << it->next() << " " ;
-	}
-	cout << endl;
-	delete it;
+	return locList_->locate(it,value);
 }
-
-
 
 #endif /* SINGLELINKEDLIST_H_ */

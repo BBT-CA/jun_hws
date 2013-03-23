@@ -17,6 +17,7 @@ class CircleNode : public Node<T>
 {
 public:
 	CircleNode();
+	CircleNode(T value);
 	void addAfter(CircleNode& node,T value);
 	void addBefore(CircleNode& node,T value);
 	void remove();
@@ -28,8 +29,15 @@ private:
 	CircleNode* cNext_;
 };
 
-using namespace std;
 /* constructor. set the node automatically point to itself */
+template <typename T>
+CircleNode<T>::CircleNode(T value)
+{
+	this->data_.set(value);
+	this->cPrev_ = this;
+	this->cNext_ = this;
+}
+
 template <typename T>
 CircleNode<T>::CircleNode()
 {

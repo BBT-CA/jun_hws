@@ -17,6 +17,7 @@ public:
 
 private:
 	T value_;
+
 };
 
 /* set value */
