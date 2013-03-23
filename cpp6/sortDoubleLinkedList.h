@@ -18,7 +18,7 @@ class SortDoubleLinkedList : public List<T>
 public:
 	SortDoubleLinkedList(Loc<T>* loc);
 	~SortDoubleLinkedList();
-	void add(int &value);
+	void add(T &value);
 	void remove(Iterator<T>* it);
 	Iterator<T>* createIterator();
 	Iterator<T>* locate(Iterator<T>* it,T value);
@@ -51,7 +51,7 @@ SortDoubleLinkedList<T>::~SortDoubleLinkedList()
 
 /* add data to the list */
 template <typename T>
-void SortDoubleLinkedList<T>::add(int &value)
+void SortDoubleLinkedList<T>::add(T &value)
 {
 	Iterator<T> *it = createIterator();
 	CircleNode<T> *nNode = new CircleNode<T>(value);

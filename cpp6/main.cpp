@@ -11,6 +11,7 @@
 #include <iostream>
 #include <cstring>
 #include <time.h>
+#include <math.h>
 #include "list.h"
 #include "iterator.h"
 #include "loc.h"
@@ -21,7 +22,8 @@
 
 using namespace std;
 
-void print(Iterator<int>* it) {
+template <typename T>
+void print(Iterator<T>* it) {
 	while(it->hasNext())
 	{
 		cout << it->next() << " " ;
@@ -44,8 +46,12 @@ int main()
 	for(int i=1;i<=num;i++)
 	{
 		int value = rand()%100;
-		list.add(value);
-		cout << value << " ";
+		if(value != 0) {
+			list.add(value);
+			cout << value << " ";
+		} else {
+			i--;
+		}
 	}
 	cout << endl;
 	delete loc;
@@ -73,18 +79,18 @@ int main()
 	cout << "===========================================" << endl << endl;
 
 	/* ===================================================*/
-	/* create a double-linked list with 21 random integer */
+	/* create a double-linked list with char*/
 
-	Loc<int>* dLoc = new Loc<int>();
-	DoubleLinkedList<int> dList(dLoc);
-	cout << "Add the following integers to list:" << endl;
-	for(int j=1;j<=num;j++)
+	char name[9] = {'J','U','N','H','U','I','W','E','N'};
+	int nameLen = 9;
+
+	Loc<char>* dLoc = new Loc<char>();
+	DoubleLinkedList<char> dList(dLoc);
+	for(int j=0;j<9;j++)
 	{
-		int dValue = rand()%100;
+		char dValue =  name[j];
 		dList.add(dValue);
-		cout << dValue << " ";
 	}
-	cout << endl;
 
 	delete dLoc;
 
@@ -93,10 +99,10 @@ int main()
 	print(dList.createIterator());
 
 	/* remove node from list */
-	int dVal;
-	cout << "Enter the integer you want to delete: ";
+	char dVal;
+	cout << "Enter the character you want to delete: ";
 	cin >> dVal;
-	Iterator<int>* itD = dList.createIterator();
+	Iterator<char>* itD = dList.createIterator();
 	while(itD->hasNext()) {
 		if (itD->next() == dVal) {
 			dList.remove(itD);
@@ -106,23 +112,20 @@ int main()
 	delete itD;
 
 	/* print list after deleting node */
-	cout << "Delete integer " << dVal << "..." << endl;
+	cout << "Delete char " << dVal << "..." << endl;
 	print(dList.createIterator());
 	cout << "===========================================" << endl << endl;
 
 	/* ===================================================*/
-	/* create a sorted double-linked list with 21 random integer */
+	/* create a sorted double-linked list with char data */
 
-	LocSortDouble<int>* sLoc = new LocSortDouble<int>();
-	SortDoubleLinkedList<int> sList(sLoc);
-	cout << "Add the following integers to list in ascending order:" << endl;
-	for(int i=1;i<=num;i++)
+	LocSortDouble<char>* sLoc = new LocSortDouble<char>();
+	SortDoubleLinkedList<char> sList(sLoc);
+	for(int i=0;i<nameLen;i++)
 	{
-		int sValue = rand()%100;
+		char sValue = name[i];
 		sList.add(sValue);
-		cout << sValue << " ";
 	}
-	cout << endl;
 	delete sLoc;
 
 	/* print list */
@@ -130,10 +133,10 @@ int main()
 	print(sList.createIterator());
 
 	/* remove node from list */
-	int sVal;
-	cout << "Enter the integer you want to delete: ";
+	char sVal;
+	cout << "Enter the character you want to delete: ";
 	cin >> sVal;
-	Iterator<int>* itS = sList.createIterator();
+	Iterator<char>* itS = sList.createIterator();
 	while(itS->hasNext()) {
 		if (itS->next() == sVal) {
 			sList.remove(itS);

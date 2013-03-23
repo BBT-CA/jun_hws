@@ -20,7 +20,7 @@ class List
 {
 public:
 	virtual ~List() {};
-	virtual void add(int &value) = 0;
+	virtual void add(T &value) = 0;
 	virtual void remove(Iterator<T>* it) = 0;
 	virtual Iterator<T>* createIterator() = 0;
 	virtual Iterator<T>* locate(Iterator<T>* it,T value)=0;
