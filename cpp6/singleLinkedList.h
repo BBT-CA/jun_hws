@@ -10,27 +10,26 @@
 
 #include "list.h"
 #include "listIterator.h"
-#include "loc.h"
+#include "locatorSingle.h"
 
 template <typename T>
 class SingleLinkedList : public List<T>
 {
 public:
-	SingleLinkedList(Loc<T>* loc);
+	SingleLinkedList(LocatorSingle<T>* loc);
 	~SingleLinkedList();
 	void add(T &value);
 	void remove(Iterator<T>* it);
 	Iterator<T>* createIterator();
-	Iterator<T>* locate(Iterator<T>* it,T value);
 
 private:
 	Node<T> head_;
-	Loc<T>* locList_;
+	Locator<T>* locList_;
 };
 
 /* SingleLinkedList constructor */
 template <typename T>
-SingleLinkedList<T>::SingleLinkedList(Loc<T>* loc)
+SingleLinkedList<T>::SingleLinkedList(LocatorSingle<T>* loc)
 {
 	locList_ = loc;
 }
@@ -54,8 +53,7 @@ void SingleLinkedList<T>::add(T &value)
 {
 	Iterator<T> *it = createIterator();
 	Node<T> *nNode = new Node<T>(value);
-	it = locate(it,value);
-	it->current()->addAfter(*nNode);
+	locList_->locate(it,value)->addAfter(*nNode);
 	delete it;
 }
 
@@ -86,11 +84,5 @@ Iterator<T>* SingleLinkedList<T>::createIterator()
 	return new ListIterator<T>(&head_);
 }
 
-/* get iterator for adding new node to the list */
-template <typename T>
-Iterator<T>* SingleLinkedList<T>::locate(Iterator<T>* it,T value)
-{
-	return locList_->locate(it,value);
-}
 
 #endif /* SINGLELINKEDLIST_H_ */

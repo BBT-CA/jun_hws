@@ -10,26 +10,27 @@
 
 #include "list.h"
 #include "circleNode.h"
+#include "locatorDouble.h"
+#include "listIterator.h"
 
 template <typename T>
 class DoubleLinkedList : public List<T>
 {
 public:
-	DoubleLinkedList(Loc<T>* loc);
+	DoubleLinkedList(Locator<T>* loc);
 	~DoubleLinkedList();
 	void add(T &value);
 	void remove(Iterator<T>* it);
 	Iterator<T>* createIterator();
-	Iterator<T>* locate(Iterator<T>* it,T value);
 
 private:
 	CircleNode<T> head_;
-	Loc<T>* locList_;
+	Locator<T>* locList_;
 };
 
 /* DobleLinkedList constructor */
 template <typename T>
-DoubleLinkedList<T>::DoubleLinkedList(Loc<T>* loc)
+DoubleLinkedList<T>::DoubleLinkedList(Locator<T>* loc)
 {
 	locList_ = loc;
 }
@@ -54,8 +55,7 @@ void DoubleLinkedList<T>::add(T &value)
 {
 	Iterator<T> *it = createIterator();
 	CircleNode<T> *nNode = new CircleNode<T>(value);
-	it = locate(it,value);
-	dynamic_cast<CircleNode<T>*>(it->current())->addAfter(*nNode,value);
+	dynamic_cast<CircleNode<T>*>(locList_->locate(it,value))->addAfter(*nNode);
 	delete it;
 }
 
@@ -74,14 +74,5 @@ Iterator<T>* DoubleLinkedList<T>::createIterator()
 {
 	return new ListIterator<T>(&head_);
 }
-
-/* get iterator for adding new node to the list */
-template <typename T>
-Iterator<T>* DoubleLinkedList<T>::locate(Iterator<T>* it,T value)
-{
-	return locList_->locate(it,value);
-}
-
-
 
 #endif /* DOUBLELINKEDLIST_H_ */

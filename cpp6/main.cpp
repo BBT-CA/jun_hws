@@ -14,11 +14,13 @@
 #include <math.h>
 #include "list.h"
 #include "iterator.h"
-#include "loc.h"
+#include "locator.h"
+#include "locatorSingle.h"
+#include "locatorDouble.h"
+#include "locatorSort.h"
 #include "singleLinkedList.h"
 #include "doubleLinkedList.h"
-#include "sortDoubleLinkedList.h"
-#include "locSortDouble.h"
+#include "array.h"
 
 using namespace std;
 
@@ -32,6 +34,14 @@ void print(Iterator<T>* it) {
 	delete it;
 }
 
+void printArray(Iterator<Array>* it) {
+while(it->hasNext())
+{
+	cout << it->next().getKey() << "," << it->next().getName() << endl;
+}
+delete it;
+}
+
 int main()
 {
 	srand(time(NULL));
@@ -40,20 +50,18 @@ int main()
 
 	/* create a single-linked list with 21 random integer */
 
-	Loc<int>* loc = new Loc<int>();
+	LocatorSingle<int>* loc = new LocatorSingle<int>();
+
 	SingleLinkedList<int> list(loc);
-	cout << "Add the following integers to list:" << endl;
 	for(int i=1;i<=num;i++)
 	{
 		int value = rand()%100;
 		if(value != 0) {
 			list.add(value);
-			cout << value << " ";
 		} else {
 			i--;
 		}
 	}
-	cout << endl;
 	delete loc;
 
 	/* print list */
@@ -82,11 +90,12 @@ int main()
 	/* create a double-linked list with char*/
 
 	char name[9] = {'J','U','N','H','U','I','W','E','N'};
-	int nameLen = 9;
+	int len = 9;
 
-	Loc<char>* dLoc = new Loc<char>();
+	LocatorDouble<char>* dLoc = new LocatorDouble<char>();
 	DoubleLinkedList<char> dList(dLoc);
-	for(int j=0;j<9;j++)
+
+	for(int j=0;j<len;j++)
 	{
 		char dValue =  name[j];
 		dList.add(dValue);
@@ -117,19 +126,21 @@ int main()
 	cout << "===========================================" << endl << endl;
 
 	/* ===================================================*/
-	/* create a sorted double-linked list with char data */
+	/* create a sorted double-linked list with char*/
 
-	LocSortDouble<char>* sLoc = new LocSortDouble<char>();
-	SortDoubleLinkedList<char> sList(sLoc);
-	for(int i=0;i<nameLen;i++)
+	LocatorSort<char>* sLoc = new LocatorSort<char>();
+	DoubleLinkedList<char> sList(sLoc);
+
+	for(int j=0;j<len;j++)
 	{
-		char sValue = name[i];
+		char sValue =  name[j];
 		sList.add(sValue);
 	}
-	delete sLoc;
+
+	delete dLoc;
 
 	/* print list */
-	cout << "Create a sorted double-linked list:" << endl;
+	cout << "Create SORTED double-linked list:" << endl;
 	print(sList.createIterator());
 
 	/* remove node from list */
@@ -146,9 +157,56 @@ int main()
 	delete itS;
 
 	/* print list after deleting node */
-	cout << "Delete integer " << sVal << "..." << endl;
+	cout << "Delete char " << dVal << "..." << endl;
 	print(sList.createIterator());
+	cout << "===========================================" << endl << endl;
+
+	/* ===================================================*/
+	/* create a sorted double-linked list with Array object */
+
+	LocatorSort<Array>* aLoc = new LocatorSort<Array>();
+	DoubleLinkedList<Array> aList(aLoc);
+
+	char* sName;
+	int key;
+	for(int i=0;i<3;i++)
+	{
+		cout << "Enter key and name: ";
+		cin >> key >> sName;
+
+		Array* array = new Array(key,sName);
+
+		/* add data to list */
+		aList.add(*array);
+
+	}
+	delete aLoc;
+
+	/* print list */
+	cout << "Create a sorted double-linked list:" << endl;
+	printArray(aList.createIterator());
+
+	/* remove node from list */
+	int aKey;
+	char* aName;
+	cout << "Enter the data you want to delete: ";
+	cin >> aKey >> aName;
+	Array* aVal = new Array(aKey,aName);
+	Iterator<Array>* itA = aList.createIterator();
+	while(itA->hasNext()) {
+		if (itA->next() == *aVal) {
+			aList.remove(itA);
+			break;
+		}
+	}
+	delete itA;
+
+	/* print list after deleting node */
+	cout << "After deleting data " << "..." << endl;
+	printArray(aList.createIterator());
 	cout << "===========================================" << endl;
+
+
 
 	return 0;
 }

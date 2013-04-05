@@ -8,34 +8,35 @@
 #ifndef CIRCLENODE_H_
 #define CIRCLENODE_H_
 
-//#include "data.h"
 #include "node.h"
 
-//class Data;
+
 template <typename T>
 class CircleNode : public Node<T>
 {
 public:
 	CircleNode();
 	CircleNode(T value);
-	void addAfter(CircleNode& node,T value);
-	void addBefore(CircleNode& node,T value);
+	void addAfter(CircleNode& node);
+	void addBefore(CircleNode& node);
 	void remove();
+	T get();
 	CircleNode* next();
 	~CircleNode() {};
 
 private:
 	CircleNode* cPrev_;
 	CircleNode* cNext_;
+	Data<T> data_;
 };
 
 /* constructor. set the node automatically point to itself */
 template <typename T>
 CircleNode<T>::CircleNode(T value)
 {
-	this->data_.set(value);
 	this->cPrev_ = this;
 	this->cNext_ = this;
+	this->data_.set(value);
 }
 
 template <typename T>
@@ -47,9 +48,8 @@ CircleNode<T>::CircleNode()
 
 /* add new node after current */
 template <typename T>
-void CircleNode<T>::addAfter(CircleNode& node,T value)
+void CircleNode<T>::addAfter(CircleNode& node)
 {
-	node.data_.set(value);
 	this->cNext_->cPrev_ = &node;
 	node.cNext_ = this->cNext_;
 	node.cPrev_ = this;
@@ -58,9 +58,8 @@ void CircleNode<T>::addAfter(CircleNode& node,T value)
 
 /* add new node before current */
 template <typename T>
-void CircleNode<T>::addBefore(CircleNode& node,T value)
+void CircleNode<T>::addBefore(CircleNode& node)
 {
-	node.data_.set(value);
 	this->cPrev_->cNext_ = &node;
 	node.cNext_ = this;
 	node.cPrev_ = this->cPrev_;
@@ -73,6 +72,13 @@ void CircleNode<T>::remove()
 {
 	cPrev_->cNext_ = cNext_;
 	cNext_->cPrev_ = cPrev_;
+}
+
+/* get value */
+template <typename T>
+T CircleNode<T>::get()
+{
+	return data_.get();
 }
 
 /* get next node */

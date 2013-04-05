@@ -11,7 +11,7 @@
 
 #include "node.h"
 #include "iterator.h"
-#include "loc.h"
+#include "locator.h"
 
 using namespace std;
 
@@ -23,14 +23,20 @@ public:
 	virtual void add(T &value) = 0;
 	virtual void remove(Iterator<T>* it) = 0;
 	virtual Iterator<T>* createIterator() = 0;
-	virtual Iterator<T>* locate(Iterator<T>* it,T value)=0;
+//	virtual Node<T>* locate(Iterator<T>* it,T value)=0;
+//	void setLocator(Locator<T>* loc);
 
 private:
 	Node<T> head_;
-	Loc<T>* locList_;
+	Locator<T>* locList_;
 };
-
-
+/*
+template <typename T>
+void List<T>::setLocator(Locator<T>* loc)
+{
+	this->locList_ = loc;
+}
+*/
 #endif /* LIST_H_ */
 
 /* question: add constructor functions in UML */

@@ -22,14 +22,12 @@ public:
 	virtual void remove();
 	virtual void setNext(Node* node);
 	virtual Node* next();
-	T get();
+	virtual T get();
 	virtual ~Node() {};
-
-protected:
-	Data<T> data_;
 
 private:
 	Node* next_;
+	Data<T> data_;
 };
 
 template <typename T>
