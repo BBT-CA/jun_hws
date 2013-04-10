@@ -54,10 +54,10 @@ void Node<T>::addAfter(Node& node)
 template <typename T>
 void Node<T>::remove()
 {
-	if((this->data_.get()!= 0) && (this->next_->data_.get() != 0)) {
+//	if((this->data_.get()!= 0) && (this->next_->data_.get() != 0)) {
 		this->data_.set(this->next_->data_.get());
 		this->next_ = this->next_->next_;
-	}
+//	}
 }
 
 /* set next node of current. This method is for deleting last node in single-linked list */

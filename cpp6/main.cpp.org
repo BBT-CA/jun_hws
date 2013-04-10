@@ -18,7 +18,6 @@
 #include "locatorSingle.h"
 #include "locatorDouble.h"
 #include "locatorSort.h"
-#include "locatorSortArray.h"
 #include "singleLinkedList.h"
 #include "doubleLinkedList.h"
 #include "array.h"
@@ -36,13 +35,11 @@ void print(Iterator<T>* it) {
 }
 
 void printArray(Iterator<Array>* it) {
-	while(it->hasNext())
-	{
-		it->next();
-		CircleNode<Array> *tmp = dynamic_cast<CircleNode<Array>*>(it->current());
-		cout << tmp->get().getKey() << "," << tmp->get().getName() << endl;
-	}
-	delete it;
+while(it->hasNext())
+{
+	cout << it->next().getKey() << "," << it->next().getName() << endl;
+}
+delete it;
 }
 
 int main()
@@ -140,7 +137,7 @@ int main()
 		sList.add(sValue);
 	}
 
-	delete sLoc;
+	delete dLoc;
 
 	/* print list */
 	cout << "Create SORTED double-linked list:" << endl;
@@ -164,22 +161,25 @@ int main()
 	print(sList.createIterator());
 	cout << "===========================================" << endl << endl;
 
+
 	/* ===================================================*/
 	/* create a sorted double-linked list with Array object */
 
 	LocatorSort<Array>* aLoc = new LocatorSort<Array>();
 	DoubleLinkedList<Array> aList(aLoc);
-	Array* arr[3];
-	char sName;
+
+	char* sName;
 	int key;
 	for(int i=0;i<3;i++)
 	{
 		cout << "Enter key and name: ";
 		cin >> key >> sName;
-		arr[i] = new Array(key,sName);
+
+		Array* array = new Array(key,sName);
 
 		/* add data to list */
-		aList.add(*arr[i]);
+		aList.add(*array);
+
 	}
 	delete aLoc;
 
@@ -189,7 +189,7 @@ int main()
 
 	/* remove node from list */
 	int aKey;
-	char aName;
+	char* aName;
 	cout << "Enter the data you want to delete: ";
 	cin >> aKey >> aName;
 	Array* aVal = new Array(aKey,aName);

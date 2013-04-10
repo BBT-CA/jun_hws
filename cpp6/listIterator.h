@@ -59,10 +59,8 @@ bool ListIterator<T>::hasNext()
 template <typename T>
 Iterator<T>& locate(Iterator<T> &it,T value)
 {
-	while(it.hasNext()){
-	if(it.next() == value)
-			break;
-	}
+	while(it.hasNext())
+		if(it.next() == value) break;
 	return it;
 }
 

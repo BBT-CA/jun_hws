@@ -1,34 +1,34 @@
 /*
- * locatorSort.h
+ * locatorSortArray.h
  *
- *  Created on: 2013-03-23
+ *  Created on: 2013-04-09
  *      Author: jun
  */
 
-#ifndef LOCATORSORT_H_
-#define LOCATORSORT_H_
+#ifndef LOCATORSORTARRAY_H_
+#define LOCATORSORTARRAY_H_
 
 #include "locator.h"
 #include "iterator.h"
 #include "array.h"
 template <typename T>
-class LocatorSort : public Locator<T>
+class LocatorSortArray : public Locator<T>
 {
 public:
 	Node<T>* locate(Iterator<T>* it,T value);
-	~LocatorSort(){};
+	~LocatorSortArray(){};
 };
 
 template <typename T>
-Node<T>* LocatorSort<T>::locate(Iterator<T>* it,T value)
+Node<T>* LocatorSortArray<T>::locate(Iterator<T>* it,T value)
 {
 	Node<T>* head = it->current();
 	Node<T>* res = head;
 	while(it->hasNext())
 	{
 		res = it->current();
-		if(value < it->next())
-			break;
+		if(value < it->next())	break;
+
 		if (it->current()->next() == head)
 		{
 			res = it->current();
@@ -38,4 +38,5 @@ Node<T>* LocatorSort<T>::locate(Iterator<T>* it,T value)
 	return res;
 }
 
-#endif /* LOCATORSORT_H_ */
+
+#endif /* LOCATORSORTARRAY_H_ */

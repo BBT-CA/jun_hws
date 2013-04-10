@@ -7,11 +7,12 @@
 
 #ifndef DOUBLELINKEDLIST_H_
 #define DOUBLELINKEDLIST_H_
-
+#include "typeinfo"
 #include "list.h"
 #include "circleNode.h"
 #include "locatorDouble.h"
 #include "listIterator.h"
+#include "array.h"
 
 template <typename T>
 class DoubleLinkedList : public List<T>
@@ -64,7 +65,7 @@ template <typename T>
 void DoubleLinkedList<T>::remove(Iterator<T>* it)
 {
 	CircleNode<T>* tmp = dynamic_cast<CircleNode<T>*>(it->current());
-	it->current()->remove();
+	dynamic_cast<CircleNode<T>*>(it->current())->remove();
 	delete tmp;
 }
 
